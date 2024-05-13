@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% block start %}
+<style>
+    .availiblity_form {
+        margin-top: -100px;
+        z-index: 2;
+        position: relative;
+    }
+
+    .btn-primary:hover {
+        background-color: rgb(16, 151, 151);
+    }
+
+    .bg-custom {
+        background-color: aquamarine;
+    }
+</style>
+<div class="container availiblity_form">
+    <div class="row">
+        <div class="col-lg-12 mb-4 shadow p-4 rounded bg-custom">
+            <h2 class="mt-3 pt-5 mb-5 text-center fw-bold"
+                style="color: #335e8d; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Book {{room}}
+                room</h2>
+            <form method="post"> <!-- Change the form method to POST -->
+                {% csrf_token %} <!-- Add CSRF token for security -->
+                <div class="row align-items-end">
+                    <div class="col-lg-3 mb-3">
+                        <label for="check_in"> Check-In Date </label>
+                        <input type="date" class="form-control shadow-none" name="check_in" id="check_in">
+                    </div>
+                    <div class="col-lg-3 mb-3">
+                        <label for="check_out"> Check-Out Date </label>
+                        <input type="date" class="form-control shadow-none" name="check_out" id="check_out">
+                    </div>
+                    <div class="mb-3 col-lg-3">
+                        <label for="price" class="form-label">Total Price</label>
+                        <input name="total_price" id="totalPrice" required type="text" class="form-control" readonly />
+                    </div>
+                    <div class="col-lg-2 mb-4">
+                        <select id="id_payment_method" name="payment_method">
+                            <option value="CASH">Cash-on</option>
+                            <option value="ONLINE">Online</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 mb-3">
+                        <button type="submit" class="btn btn-primary">Submit</button> <!-- Change type to submit -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    // Get references to the check-in and check-out date input fields
+    var checkInInput = document.getElementById('check_in');
+    var checkOutInput = document.getElementById('check_out');
+
+    // Add event listeners to listen for changes in the check-in and check-out dates
+    checkInInput.addEventListener('change', updateTotalPrice);
+    checkOutInput.addEventListener('change', updateTotalPrice);
+
+    // Function to calculate and update the total price
+    function updateTotalPrice() {
+        var checkInDate = new Date(checkInInput.value);
+        var checkOutDate = new Date(checkOutInput.value);
+
+        // Calculate the number of days between check-in and check-out dates
+            var numberOfDays = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+
+            // Retrieve the room price from the backend (you may need to pass it in the context)
+            var roomPrice = {{room_price}}// Assuming room price is passed in the context
+
+        // Calculate the total price
+        var totalPrice = numberOfDays * roomPrice;
+        if (!isNaN(totalPrice)) {
+
+        // Display the total price in the HTML element
+        document.getElementById('totalPrice').value = totalPrice.toFixed(2);
+    }
+    }
+</script>
+
+
+{% endblock %}

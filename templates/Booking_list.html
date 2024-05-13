@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block start %}
+
+<div class="container mt-5">
+    <form class="col-40 mx-auto card p-3 shadow-1g" method="POST" enctype="multipart/form-data"
+        style="background-color: rgb(208, 201, 201);">
+        {% csrf_token %}
+        {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <table class="table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th scope="col">Booking ID</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">User Role</th>
+
+                    <th scope="col">Room No</th>
+                    <th scope="col"> Check In</th>
+                    <th scope="col">Check Out</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Status</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for bl in booking_list %}
+                <tr>
+                    <td>{{ bl.booking_id }}</td>
+                    <td>{{ bl.user }}</td>
+                    <td>{{ bl.role }}</td>
+
+                    <td>{{ bl.room }}</td>
+                    <td>{{ bl.check_in }}</td>
+                    <td>{{ bl.check_out }}</td>
+                    <td>{{ bl.tot_price }}</td>
+                    <td>{{ bl.payment_method }}</td>
+
+                    {% if not bl.confirmed %}
+                    <td>
+                        <a href="{% url 'approve_booking' bl.booking_id %}" class="btn btn-primary d-flex">Approve</a>
+                        <a href="{% url 'reject_booking' bl.booking_id %}" class="btn btn-danger d-flex">Reject</a>
+                        <!-- <a href="/update_product/{{product.id}}" class="btn btn-success">Move</a> -->
+                        <!-- <a href="/product-instances/{{product.id}}" class="btn btn-success">Move</a> -->
+
+                    </td>
+                    {% else %}
+                    <td> </td>
+
+                    {% endif %}
+                    {% if bl.confirmed %}
+
+                    <td>confirmed</td>
+                    {% else %}
+                    <td>Not confirmed</td>
+                    {% endif %}
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+</div>
+{% endblock %}

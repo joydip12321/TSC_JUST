@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/static/css/Style1.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+
+  <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-cssgrid">
+  {% csrf_token %}
+  {% if messages %}
+  <div class="alert alert-primary" role="alert">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="header">
+    <div class="head">
+      {% if user.is_authenticated and user.is_staff%}
+      <a href="/RoomType/" class="head_a">Add Room Type</a>
+      <a href="/AddRoom/" class="head_a">Add a Room</a>
+      <a href="/Notices/" class="head_a">Add Notice</a>
+      <a href="/Booking_list/" class="head_a">Booking List</a>
+      {% endif %}
+      <a href="https://just.edu.bd/" class="head_a">JUST WEBSITE</a>
+
+      {% if user.is_authenticated and not user.is_staff %}
+      <a href="/logout/" class="head_a">Logout</a>
+      {% else %}
+      <a href="/login/" class="head_a">LogIn</a>
+      {% endif %}
+
+      {% if user.is_authenticated and user.is_staff%}
+      <a href="/AdminLogout/" class="head_a">Admin LogOut</a>
+      {% else %}
+      <a href="/AdminLogin/" class="head_a">Admin LogIn</a>
+      {% endif %}
+
+    </div>
+    <div class="nav_d">
+      <div class="logo">
+        <img src="/static/img/JUST.jpeg" alt="JUST logo" class="nav_i" height="50px" width="50px">
+        <p class="nav_t">TEACHER-STUDENT CENTRE</p>
+      </div>
+      <div class="menu">
+
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="ri-menu-line nav__burger"></i>
+          <i class="ri-close-line nav__close"></i>
+        </div>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul type="none" class="nav__list">
+            <li><a href="/" class="nav_link">Home</a></li>
+            <li><a href="/Notices_list/" class="nav_link">Notice</a></li>
+            <li><a href="#" class="nav_link">Event</a></li>
+            <li><a href="/Room_list/" class="nav_link">Room</a></li>
+            <li><a href="#" class="nav_link">Contact</a></li>
+            <li><a href="#" class="nav_link">About</a></li>
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
+  <div class="container_fluid">
+    <div class="swiper container_swiper">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide">
+          <img src="/static/img/night.jpg" class="w-100 d-block" height="400px" />
+          <div class="overlay-text">{{page_name}}</div>
+          <!-- <div class="overlay"><a href="/">HOME</a></div> -->
+
+        </div>
+        <div class="swiper-slide">
+          <img src="/static/img/building.jpg" class="w-100 d-block" height="400px" />
+
+          <div class="overlay-text">{{page_name}}</div>
+          <!-- <div class="overlay"><a href="/">HOME</a></div> -->
+
+        </div>
+        <div class="swiper-slide">
+          <img src="/static/img/wow.jpg" class="w-100 d-block" height="400px" />
+          <div class="overlay-text">{{page_name}}</div>
+          <!-- <div class="overlay"><a href="/">HOME</a></div> -->
+
+        </div>
+        <div class="swiper-slide">
+          <img src="/static/img/adommo.jpg" class="w-100 d-block" height="400px" />
+          <div class="overlay-text">{{page_name}}</div>
+          <!-- <div class="overlay"><a href="/">HOME</a> </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {% block start %} {% endblock %}
+
+  <footer>
+    <p class="design_t">&copy 2024 JUST TSC</p>
+  </footer>
+  <script src="/static/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".container_swiper", {
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+
+    });
+    // Get the current URL path
+var path = window.location.pathname;
+
+// Get all navigation links
+var links = document.getElementsByClassName("nav_link");
+
+// Loop through each link
+for (var i = 0; i < links.length; i++) {
+  // Check if the link's href matches the current URL path
+  if (links[i].getAttribute("href") === path) {
+    // Add a class to mark it as active
+    links[i].classList.add("active");
+  }
+}
+
+  </script>
+
+
+</body>
+
+
+</html>

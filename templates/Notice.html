@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block start %}
+
+
+<div class="container mt-5">
+    <form
+      class="col-6 mx-auto card p-3 shadow-1g"
+      method="POST"
+      enctype="multipart/form-data"
+      style="background-color: rgb(208, 201, 201);"
+  
+    >
+      {% csrf_token %}
+      <h2>Add Notice</h2>
+      <hr />
+      {% if messages %}
+      <div class="alert alert-primary" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+          </div>
+      {% endif %}
+      <div class="mb-3">
+        <label for="title" class="form-label">Give a Title</label>
+        <input name="title" required type="text" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="pdf" class="form-label">Add PDF file</label>
+        <input name="pdf" type="file" class="form-control" />
+      </div>
+        
+      <button type="submit" class="btn btn-primary">Add Notice</button>
+    </form>
+    <hr />
+  </div>
+  
+  {% endblock %}

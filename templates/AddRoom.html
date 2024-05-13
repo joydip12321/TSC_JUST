@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block start %}
+
+
+<div class="container mt-5">
+    <form
+      class="col-6 mx-auto card p-3 shadow-1g"
+      method="POST"
+      enctype="multipart/form-data"
+      style="background-color: rgb(208, 201, 201);"
+  
+    >
+      {% csrf_token %}
+      <h2>Add Room</h2>
+      <hr />
+      {% if messages %}
+      <div class="alert alert-primary" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+          </div>
+      {% endif %}
+      <div class="mb-3">
+        <label for="room" class="form-label">Room No</label>
+        <input name="room" required type="text" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="roomtype" class="form-label">Room Type</label>
+        <select name="roomtype" class="form-control">
+            <option value="">Select a Room Type</option>
+            {% for roomtype in roomt %}
+                <option value="{{ roomtype.pk }}">{{ roomtype.roomtype }}</option>
+            {% endfor %}
+        </select>
+    </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Room Description</label>
+        <textarea name="description" class="form-control"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="img" class="form-label">Room Image</label>
+        <input name="img" type="file" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Room Price</label>
+        <input name="price" required type="text" class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-primary">Add Room</button>
+    </form>
+    <hr />
+  </div>
+  
+  {% endblock %}

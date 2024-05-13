@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block start %}
+<div class="container mt-5">
+    <form class="col-13 card p-1 " method="POST" enctype="multipart/form-data"
+        style="background-color: rgb(207, 204, 6);">
+        {% csrf_token %}
+
+        <!-- Input fields for adding new notices can be added here -->
+
+
+        {% for notice in notices %}
+        <div class="card mt-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-3 font-weight-bold"><i class="bi bi-calendar4"></i> {{ notice.uploaded_at }}</p>
+                        <p class="mb-0">{{ notice.title }}</p>
+                    </div>
+                    <a href="{{ notice.pdf.url }}" class="btn btn-warning" target="_blank">Download</a>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </form>
+</div>
+<nav aria-label="...">
+    <ul class="pagination justify-content-center mt-3 mb-3">
+        {% if notices.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="/Notices_list/?page=1">First</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="/Notices_list/?page={{notices.previous_page_number}}">Previous</a>
+        </li>
+
+        {% endif %}
+        {% for n in notices.paginator.page_range %}
+        <li class="page-item">
+            <a class="page-link" href="/Notices_list/?page={{ n }}">{{ n }}</a>
+        </li>
+        {% endfor %}
+
+        {% if notices.has_next %}
+
+        <li class="page-item">
+            <a class="page-link" href="/Notices_list/?page={{notices.next_page_number}}">Next</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="/Notices_list/?page={{ notices.paginator.num_pages }}">Last</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+{% endblock %}
