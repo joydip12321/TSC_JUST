@@ -11,6 +11,8 @@ class UserProfile(models.Model):
     ]
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     role = models.CharField(max_length=20, choices=USER_ROLES)
+    def __str__(self):
+        return self.role
 
 class Room_Type(models.Model):
     roomtype = models.CharField(max_length=100)
